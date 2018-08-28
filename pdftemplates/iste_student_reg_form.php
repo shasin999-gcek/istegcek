@@ -64,10 +64,10 @@
       }
 
       table.form-table {
-        margin: 20px;
+        margin: 10px;
         width: 45em;
         empty-cells: hide;
-        margin-bottom: 5px;
+        margin-bottom: 3px;
       }
 
       td {
@@ -95,6 +95,7 @@
       p {
         margin: 8px;
         margin-left: 10px;
+        font-size: 13px;
       }
 
       div.footer-1 {
@@ -139,22 +140,23 @@
       <tr>
         <td class="first">1.</td>
         <td class="second">Name of applicant (student) <br> (in capital letters)</td>
-        <td>: <?= $name ?> </td>
+        <td>: <?= strtoupper($regData["student_info"]->name); ?> </td>
       </tr>
       <tr>
         <td class="first">2.</td>
         <td class="second">Date of Birth</td>
-        <td>: 23/02/1999</td>
+        <?php list($y, $m, $d) = preg_split("/-/", $regData["student_info"]->dob); ?>
+        <td>: <?= $d."-".$m."-".$y; ?> </td>
       </tr>
       <tr>
         <td class="first">3.</td>
         <td class="second">Year/Semester of Study</td>
-        <td>: 2018/ S2</td>
+        <td>: <?= $regData["student_info"]->semester; ?> </td>
       </tr>
       <tr>
         <td class="first">4.</td>
         <td class="second">Branch of study / Course of Study</td>
-        <td>: B-tech Computer Science And Engineering</td>
+        <td>: BTech <?= $regData["student_info"]->branch_name; ?></td>
       </tr>
       <tr>
         <td class="first">5.</td>
@@ -167,15 +169,18 @@
       <tr>
         <td class="first">6.</td>
         <td class="second">Home address (Permanent Address)</td>
-        <td>: Poovanoth House<br>
-            &nbsp;&nbsp;Kottor, P.O Kadachira<br>
-            &nbsp;&nbsp;Pin: 670621
+        <td>: <?= $regData["student_info"]->house_name; ?> , 
+            <?= $regData["student_info"]->street_name; ?><br>
+            &nbsp;&nbsp;P.O <?= $regData["student_info"]->post; ?> ,
+            <?= $regData["student_info"]->district; ?><br>
+            &nbsp;&nbsp;<?= $regData["student_info"]->state; ?>,
+            <?= $regData["student_info"]->pincode; ?>
         </td>
       </tr>
       <tr>
         <td class="first">7.</td>
         <td class="second">Details of Remittance<br>(Amount, draft number, bank etc.)</td>
-        <td>: Account     : 6706151616 <br>
+        <td>: Account     : <br>
               &nbsp;&nbsp;D.D. Number : ________________ Date __________<br>
               &nbsp;&nbsp;Bank & Branch : ______________________________<br>
         </td>
@@ -183,32 +188,43 @@
       <tr>
         <td class="first">8.</td>
         <td>Special interest</td>
-        <td>: Muhammed Shasin</td>
+        <td>:
+          <?php foreach($regData["special_interests"] as $si) : ?>
+            <?= $si->value ?> ,
+          <?php endforeach; ?>
+          <?php if($regData["other_special_interests"]) : ?>
+            <?= $regData["other_special_interests"]->value; ?>
+          <?php endif; ?>  
+        </td>
       </tr>
       <tr>
         <td class="first">9.</td>
         <td>Career Preference </td>
-        <td>: Muhammed Shasin</td>
+        <td>:
+          <?php foreach($regData["career_preferences"] as $cp) : ?>
+            <?= $cp->value ?> ,
+          <?php endforeach; ?>
+          <?php if($regData["other_career_preferences"]) : ?>
+            <?= $regData["other_career_preferences"]->value; ?>
+          <?php endif; ?>  
+        </td>
       </tr>
       <tr>
         <td class="first">10.</td>
         <td>Type of Service/Assistance you <br>expect form ISTE students Chapter <br>(Tick 2 or 3 only) 
         </td>
         <td>
-          <input type="checkbox" checked="">
-          <label>Coaching for competitive examination, job interview etc</label> <br>
-          <input type="checkbox" checked="">
-          <label>Supervisory and communication skill development</label> <br>
-          <input type="checkbox" checked="">
-          <label>Training for self-employment</label> <br>
-          <input type="checkbox" checked="">
-          <label>Guidance on job opportunities in India and abroad</label> <br>
-          <input type="checkbox" checked="">
-          <label> Arranging training in industries and visits to industry </label><br>
-          <input type="checkbox" >
-          <label>Special Coaching, General counselling services</label> <br>
-          <input type="checkbox" checked="">
-          <label>Any other item (specify)</label> <br>
+          <?php foreach($regData["services"] as $service) : ?>
+            <input type="checkbox" 
+              <?php if(in_array($service->id, $regData["checked_services"])) : ?>
+                checked=""
+              <?php endif; ?>
+              >
+            <label><?= $service->value; ?></label> <br>
+          <?php endforeach; ?>
+          <?php if($regData["other_services"]) : ?>
+            <?= $regData["other_services"]->value; ?>
+          <?php endif; ?>  
         </td>
       </tr>
     </table>

@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
+
+
+section.top {
+	margin-top: 80px; 
+	margin-bottom: 20px;
+}
+
+.bg-darkblue {
+  background-color: #0e1b4d;
+}
+
+
+div.page-header {
+  margin: 20px;
+  border-bottom: 1px solid #eee;
+  font-family: 'Quicksand', sans-serif;
+}
+
+.card {
+  margin: 20px;
+}
+
+.card-header {
+	background-color: #0e1b4d;
+	color: #fff;
+}
+
+div.page-header h3 {
+  color: #0e1b4d;
+}
+
+button.submit-btn {
+	color: #fff;
+	margin-left: 20px;
+}
+
+@media (max-width:720px)  {
+	div.page-header h3 {
+  	font-size: 20px;
+  }
+}
+

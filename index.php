@@ -1,2 +1,4 @@
 <?php
-  echo __DIR__;
+  
+
+  header("Location: /register.php");
