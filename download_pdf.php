@@ -19,9 +19,13 @@
       }
       else
       {
-        header('Location: /register.php');
+        $isRegistered = false;
+        require 'views/searchpdf.view.php';
+        exit;
       }
   	}
+
+    require 'views/searchpdf.view.php';
   }
 
   if($_SERVER["REQUEST_METHOD"] == "POST")

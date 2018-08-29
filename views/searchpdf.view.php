@@ -34,9 +34,6 @@
     }
   </style>
 
-  <script type="text/javascript">
-    window.admNumber = "<?= $admNumber; ?>"
-  </script>
 </head>
 
 <body>
@@ -49,37 +46,43 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
+         <li class="nav-item active">
           <a class="nav-link" href="/register.php">Register
-            <span class="sr-only">(current)</span>
-          </a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="/download_pdf.php">Search Application Form
             <span class="sr-only">(current)</span>
           </a>
         </li>
       </ul>
     </div>
   </nav>
+
   <section class="top">
     <div class="container">
       <div class="page-header">
-        <h3>Downlaod Application Form</h3>
+        <h3>Search Application Form</h3>
       </div>
-      <div class="alert alert-info" role="alert" style="font-family: 'Quicksand'; margin: 20px;">
-        <h4 class="alert-heading">Welcome to ISTE GCEK family</h4>
-        <p>Please download and print this PDF file</p>
-        <hr>
-        <p class="mb-0">
-          If you have any queries or found corrupted PDF document, 
-          <a href="tel:+919645100464" class="btn btn-sm bg-darkblue" style="color: #fff;">Call Us</a> 
-        </p>
-      </div>
-      <form method="post" action='<?= $_SERVER["PHP_SELF"] ?>'>
-        <input type="text" name="admno" value="<?= $admNumber; ?>" style="display: none;">
-        <input type="text" name="download" value="file" style="display: none;">
-        <button type="submit" id="download-btn" class="btn bg-darkblue" style="color: #fff; margin-left: 20px;">Download</button>
+      
+      <?php if(isset($isRegistered) && !$isRegistered) : ?>
+        <div id="error_msg" class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>Please register first</strong> 
+          Click <a href="/register.php"><strong>here</strong></a>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      <?php endif; ?>
+
+     <form method="get" action='<?= $_SERVER["PHP_SELF"] ?>' style="margin-left: 20px;" class="needs-validation" novalidate>
+       <div class="form-group row">
+          <label for="admno" class="col-sm-2 col-form-label">Admission Number:</label>
+          <div class="col-sm-5">
+            <input type="text" class="form-control" name="admno" id="admno" 
+            value="<?= isset($admNumber) ? $admNumber : ''; ?>" placeholder="Enter your admission number" required>
+            <div class="invalid-feedback">
+              Please enter your admission number
+            </div>
+          </div>
+        </div>
+        <button type="submit" id="search-btn" class="btn bg-darkblue" style="color: #fff;">Search</button>
       </form>
     </div>
   </section>
@@ -105,22 +108,23 @@
   <script src="/assets/js/bootstrap.bundle.min.js"></script>
   <script src="/assets/js/loadingoverlay.min.js"></script>
   <script type="text/javascript">
-    $(document).ready(function() {
-      $('#download-btn').on('click', function(e) {
-        
-
-        $.LoadingOverlay("show", {
-          image: "",
-          fontawesome: "fa fa-refresh fa-spin",
-          size: 15
+    (function() {
+      'use strict';
+      window.addEventListener('load', function() {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+          form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
         });
-
-        window.setTimeout(function() {
-          $.LoadingOverlay("hide");
-        }, 5000);
-
-      });
-    });
+      }, false);
+    })();
   </script>
 </body>
 

@@ -162,19 +162,19 @@
         <td class="first">5.</td>
         <td class="second">Address of Institution</td>
         <td>: Govt. College Of Engineering<br>
-            &nbsp;&nbsp;Mangatuparamba, P.O ParassiniKadavu<br>
-            &nbsp;&nbsp;Pin: 670621
+            &nbsp;&nbsp;Mangattuparamba, P.O ParassiniKadavu<br>
+            &nbsp;&nbsp;Kannur-670 563, Kerala
         </td>
       </tr>
       <tr>
         <td class="first">6.</td>
         <td class="second">Home address (Permanent Address)</td>
-        <td>: <?= $regData["student_info"]->house_name; ?> , 
-            <?= $regData["student_info"]->street_name; ?><br>
-            &nbsp;&nbsp;P.O <?= $regData["student_info"]->post; ?> ,
-            <?= $regData["student_info"]->district; ?><br>
-            &nbsp;&nbsp;<?= $regData["student_info"]->state; ?>,
-            <?= $regData["student_info"]->pincode; ?>
+        <td>: <?= $regData["student_info"]->house_name; ?> <br>
+            &nbsp;&nbsp;<?= $regData["student_info"]->street_name; ?>,
+            P.O <?= $regData["student_info"]->post; ?> <br>
+            &nbsp;&nbsp;<?= $regData["student_info"]->district; ?> -
+            <?= $regData["student_info"]->pincode; ?>, 
+            <?= $regData["student_info"]->state; ?>
         </td>
       </tr>
       <tr>
