@@ -38,7 +38,7 @@
 
 <body>
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-darkblue">
-    <a class="navbar-brand" href="/">
+    <a class="navbar-brand" href="#">
       <img src="/assets/images/iste.png" width="30" height="30" class="d-inline-block align-top" alt=""> ISTE GCE Kannur
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,44 +46,51 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ml-auto">
-         <li class="nav-item active">
+        <li class="nav-item active">
           <a class="nav-link" href="/register.php">Register
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/download_pdf.php">Search Application Form
             <span class="sr-only">(current)</span>
           </a>
         </li>
       </ul>
     </div>
   </nav>
-
   <section class="top">
     <div class="container">
-      <div class="page-header">
-        <h3>Search Application Form</h3>
+     
+     
+      <div class="card text-center">
+        <div class="card-header">
+         Student Membership Registration - 2018
+        </div>
+        <div class="card-body">
+          <h5 class="card-title"><kbd><?= $count; ?></kbd> total registrations</h5>
+          <p class="card-text">Join ISTE by taking a student membership</p>
+           <a href="/register.php" class="btn bg-darkblue" style="color: #fff;">Register</a>
+        </div>
+        <div class="card-footer text-muted">
+          Registration closes soon..
+        </div>
       </div>
-      
-      <?php if(isset($isRegistered) && !$isRegistered) : ?>
-        <div id="error_msg" class="alert alert-danger alert-dismissible fade show" role="alert">
-          <strong>Please register first</strong> 
-          Click <a href="/register.php"><strong>here</strong></a>
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-      <?php endif; ?>
 
-     <form method="get" action='<?= $_SERVER["PHP_SELF"] ?>' style="margin-left: 20px;" class="needs-validation" novalidate>
-       <div class="form-group row">
-          <label for="admno" class="col-sm-2 col-form-label">Admission Number:</label>
-          <div class="col-sm-5">
-            <input type="text" class="form-control" name="admno" id="admno" 
-            value="<?= isset($admNumber) ? $admNumber : ''; ?>" placeholder="Enter your admission number" required>
-            <div class="invalid-feedback">
-              Please enter your admission number
-            </div>
-          </div>
+      <div class="card text-center">
+        <div class="card-header">
+          Download Application Form
         </div>
-        <button type="submit" id="search-btn" class="btn bg-darkblue" style="color: #fff;">Search</button>
-      </form>
+        <div class="card-body">
+          <h5 class="card-title">Already registered ? </h5>
+          <p class="card-text">Download application form by clicking below</p>
+          <a href="/download_pdf.php" class="btn bg-darkblue" style="color: #fff;">Download</a>
+        </div>
+        <div class="card-footer text-muted">
+          Any queries regarding registration <a href="tel:+919645100464">Call us</a>
+        </div>
+      </div>
+
     </div>
   </section>
 <!--   <footer style="margin-top: 20px; background-color: #eee; height: 80px;">
@@ -106,26 +113,7 @@
 
   <script src="/assets/js/jquery-3.3.1.min.js"></script>
   <script src="/assets/js/bootstrap.bundle.min.js"></script>
-  <script src="/assets/js/loadingoverlay.min.js"></script>
-  <script type="text/javascript">
-    (function() {
-      'use strict';
-      window.addEventListener('load', function() {
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.getElementsByClassName('needs-validation');
-        // Loop over them and prevent submission
-        var validation = Array.prototype.filter.call(forms, function(form) {
-          form.addEventListener('submit', function(event) {
-            if (form.checkValidity() === false) {
-              event.preventDefault();
-              event.stopPropagation();
-            }
-            form.classList.add('was-validated');
-          }, false);
-        });
-      }, false);
-    })();
-  </script>
+  
 </body>
 
 </html>

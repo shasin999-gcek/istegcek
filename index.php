@@ -1,4 +1,7 @@
 <?php
   
+  $builder = require 'core/bootstrap.php';
 
-  header("Location: /register.php");
+  $count = $builder->getRegistrationCount();
+  
+  require 'views/index.view.php';

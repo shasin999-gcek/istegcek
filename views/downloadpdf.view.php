@@ -41,7 +41,7 @@
 
 <body>
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-darkblue">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="/">
       <img src="/assets/images/iste.png" width="30" height="30" class="d-inline-block align-top" alt=""> ISTE GCE Kannur
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

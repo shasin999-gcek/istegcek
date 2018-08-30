@@ -1,7 +1,7 @@
 
 <?php
 
-  $config = require 'config.prod.php';
+  $config = require 'config.php';
 
   require 'database/Connection.php';
   require 'database/QueryBuilder.php';

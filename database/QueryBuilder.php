@@ -9,6 +9,15 @@
 			$this->pdo = $pdo;
 		}
 
+    public function getRegistrationCount()
+    {
+      $statement = $this->pdo->prepare("select count(*) from student_registrations");
+
+      $statement->execute();
+
+      return $statement->fetch(PDO::FETCH_COLUMN, 0);
+    }
+
 		public function selectAllFromTable($table) 
 		{
 			$statement = $this->pdo->prepare("select * from ${table}");
