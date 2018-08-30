@@ -161,6 +161,19 @@ MYSQL_QUERY;
 
     }
 
+    public function getAllStudentDetails()
+    {
+          $selectStudentInfoSQL = <<<'MYSQL_QUERY'
+      select stu.id, name, dob, adm_no, branch_name, semester, district
+      from student_registrations as stu, branches as b where stu.branch_id = b.id
+MYSQL_QUERY;
+
+      $stmt = $this->pdo->prepare($selectStudentInfoSQL);
+
+      $stmt->execute();
+
+      return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
 
     public function getRegistrationFromAdmno($admno)
     {
