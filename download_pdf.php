@@ -2,7 +2,7 @@
    
   require_once 'dompdf/autoload.inc.php';
   
-  $builder = require 'core/bootstrap.php';
+  require 'core/bootstrap.php';
 
   use Dompdf\Dompdf;
 

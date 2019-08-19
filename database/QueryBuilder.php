@@ -9,14 +9,25 @@
 			$this->pdo = $pdo;
 		}
 
-    public function getRegistrationCount()
-    {
-      $statement = $this->pdo->prepare("select count(*) from student_registrations");
+        public function getRegistrationCount()
+        {
+          $statement = $this->pdo->prepare("select count(*) from student_registrations");
 
-      $statement->execute();
+          $statement->execute();
 
-      return $statement->fetch(PDO::FETCH_COLUMN, 0);
-    }
+          return $statement->fetch(PDO::FETCH_COLUMN, 0);
+        }
+
+
+        public function getWebsiteSettings($setting_name)
+        {
+            $statement = $this->pdo->prepare("select value from website_settings where name = ?");
+
+            $statement->execute(array($setting_name));
+
+            return $statement->fetch(PDO::FETCH_COLUMN, 0);
+        }
+
 
 		public function selectAllFromTable($table) 
 		{
@@ -28,35 +39,39 @@
 		}
 
 
-    public function isAdmnoAlreadyTaken($adm_no)
-    {
-      $statement = $this->pdo->prepare(
-        "select id from student_registrations where adm_no= ?"
-      );
+        public function isAdmnoAlreadyTaken($adm_no)
+        {
+          $statement = $this->pdo->prepare(
+            "select id from student_registrations where adm_no= ?"
+          );
 
-      $statement->execute(array($adm_no));
-
-     
-      if($statement->rowCount() > 0)
-      {
-        return  true;
-      }
-      else
-      {
-        return false;
-      }
-
-    }
+          $statement->execute(array($adm_no));
 
 
-    public function saveRegistration($data)
+          if($statement->rowCount() > 0)
+          {
+            return  true;
+          }
+          else
+          {
+            return false;
+          }
+
+        }
+
+
+    public function saveRegistration($data, $regyear)
     {
       $sql = <<<'MYSQL_QUERY'
-        INSERT INTO `student_registrations` (`name`, `dob`, `branch_id`, `adm_no`,`semester`, `house_name`, `street_name`, `post`, `pincode`, `district`,`state`, `reg_year`) values(:name, :dob, :branch, :adm_no, :sem, :house_name, :street_name, :post, :pincode, :district, :state, 2018);
+        INSERT INTO `student_registrations` 
+        (`name`, `mob_no`, `email`, `dob`, `branch_id`, `adm_no`,`semester`, `house_name`, `street_name`, `post`, `pincode`, `district`,`state`, `reg_year`)
+         values(:name, :mob_no, :email, :dob, :branch, :adm_no, :sem, :house_name, :street_name, :post, :pincode, :district, :state, :reg_year);
 MYSQL_QUERY;
 
       $values = [
         ":name" => $data["name-of-applicant"],
+        ":mob_no" => $data["mob_no"],
+        ":email" => $data["email"],
         ":dob" => $data["dob"],
         ":branch" => $data["branch"],
         ":adm_no" => $data["admission-no"],
@@ -66,7 +81,8 @@ MYSQL_QUERY;
         ":post" => $data["post"],
         ":pincode" => $data["pincode"],
         ":district" => $data["district"],
-        ":state" => $data["state"]
+        ":state" => $data["state"],
+        ":reg_year" => $regyear
       ];
 
       
@@ -138,7 +154,7 @@ MYSQL_QUERY;
           $statement->execute(array(":reg_id" => $regId, ":value" => $data["other-cp"]));  
         }
 
-        // insert other career preferences if exists
+        // insert other services if exists
         if(!empty($data["other-service"]))
         {
           $statement = $this->pdo->prepare(
@@ -161,10 +177,11 @@ MYSQL_QUERY;
 
     }
 
+
     public function getAllStudentDetails()
     {
           $selectStudentInfoSQL = <<<'MYSQL_QUERY'
-      select stu.id, name, dob, adm_no, branch_name, semester, district
+      select stu.id, name, mob_no, email, dob, adm_no, branch_name, semester, district
       from student_registrations as stu, branches as b where stu.branch_id = b.id
 MYSQL_QUERY;
 
@@ -174,6 +191,8 @@ MYSQL_QUERY;
 
       return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
+
+
 
     public function getRegistrationFromAdmno($admno)
     {
@@ -260,7 +279,7 @@ MYSQL_QUERY;
 
     }
 
-	}
+}
 
 
 	

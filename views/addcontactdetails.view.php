@@ -44,7 +44,7 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
+    <!-- <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ml-auto">
          <li class="nav-item active">
           <a class="nav-link" href="/register.php">Register
@@ -52,37 +52,80 @@
           </a>
         </li>
       </ul>
-    </div>
+    </div> -->
   </nav>
 
   <section class="top">
     <div class="container">
       <div class="page-header">
-        <h3>Search Application Form</h3>
+        <h3>Add your contact details</h3>
       </div>
       
-      <?php if(isset($isRegistered) && !$isRegistered) : ?>
-        <div id="error_msg" class="alert alert-danger alert-dismissible fade show" role="alert">
-          <strong>Please register first</strong> 
-          Click <a href="/register.php"><strong>here</strong></a>
+      <?php if(isset($isSuccess) && $isSuccess) : ?>
+        <div id="error_msg" class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Successfully updated your contact details</strong> 
+          If any mistakes <a href="tel:+919645100464"><strong>Call us</strong></a>
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
       <?php endif; ?>
 
-     <form method="get" action='<?= $_SERVER["PHP_SELF"] ?>' style="margin-left: 20px;" class="needs-validation" novalidate>
+      <?php if(isset($isAlreadyAdded) && $isAlreadyAdded) : ?>
+        <div id="error_msg" class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>You already updated the data</strong> 
+          If any mistakes <a href="tel:+919645100464"><strong>Call us</strong></a>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      <?php endif; ?>
+
+      <?php if(isset($isRegistered) && !$isRegistered) : ?>
+        <div id="error_msg" class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>You are not a ISTE GCEKannur Member</strong> 
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      <?php endif; ?>
+
+     <form id="contact-form" method="post" action='<?= $_SERVER["PHP_SELF"] ?>' style="margin-left: 20px;" class="needs-validation" novalidate>
+
        <div class="form-group row">
           <label for="admno" class="col-sm-2 col-form-label">Admission Number:</label>
           <div class="col-sm-5">
-            <input type="text" class="form-control" name="admno" id="admno" 
-            value="<?= isset($admNumber) ? $admNumber : ''; ?>" placeholder="Enter your admission number" required>
+            <input type="text" class="form-control" name="adm_no" id="admno" 
+            value="<?= isset($adm_no) ? $adm_no : ''; ?>" placeholder="Enter your admission number" required>
             <div class="invalid-feedback">
               Please enter your admission number
             </div>
           </div>
         </div>
-        <button type="submit" id="search-btn" class="btn bg-darkblue" style="color: #fff;">Search</button>
+
+        <div class="form-group row">
+          <label for="email" class="col-sm-2 col-form-label">Email:</label>
+          <div class="col-sm-5">
+            <input type="text" class="form-control" name="email" id="email" 
+            value="<?= isset($email) ? $email : ''; ?>" placeholder="Enter your email address" required>
+            <div class="invalid-feedback">
+              Please enter your email address
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="mobile_number" class="col-sm-2 col-form-label">Mobile Number:</label>
+          <div class="col-sm-5">
+            <input type="text" class="form-control" name="mobile_number" id="mobile_number" 
+            value="<?= isset($mobile_number) ? $mobile_number : ''; ?>" placeholder="Enter your mobile number" required>
+            <div class="invalid-feedback">
+              Please enter your mobile number
+            </div>
+          </div>
+        </div>
+        
+        <button type="submit" id="search-btn" class="btn bg-darkblue" style="color: #fff;">Save</button>
       </form>
     </div>
   </section>
@@ -98,8 +141,7 @@
   <footer class="footer sticky">
     <div class="container">
       <span class="text-muted">
-      Developed by <a href="https://www.facebook.com/muhammed.shasin.9">Head WebOps</a>,
-      <a href="https://www.facebook.com/GCEK.ISTE/">ISTE GCEK</a> 
+      Developed by <a style="color: #0e1b4d;" href="https://www.facebook.com/muhammed.shasin.9">Muhammed Shasin</a>
     </span>
     </div>
   </footer>
@@ -126,6 +168,12 @@
       }, false);
     })();
   </script>
+
+ <?php if(isset($isSuccess) && $isSuccess) : ?>
+    <script>
+      $("#contact-form :input").prop("disabled", true);
+    </script>
+ <?php endif; ?>
 </body>
 
 </html>

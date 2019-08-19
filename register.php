@@ -1,7 +1,7 @@
 <?php 
 
 
-  $builder = require 'core/bootstrap.php';
+  require 'core/bootstrap.php';
 
   if($_SERVER["REQUEST_METHOD"] == "GET")
   {
@@ -47,7 +47,8 @@
     }
     else
     {
-      $builder->saveRegistration($_POST);
+      $regYear = $builder->getWebsiteSettings('REG_YEAR');
+      $builder->saveRegistration($_POST, $regYear);
 
       $jsonResponse = [
         "redirect_url" => "/download_pdf.php?admno={$_POST['admission-no']}"

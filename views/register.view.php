@@ -8,7 +8,7 @@
 
   <meta name="theme-color" content="#0e1b4d">
   
-  <title>Document</title>
+  <title>ISTE Student menbership registration</title>
   <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
   <link rel="stylesheet" href="/assets/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="/assets/css/main.css">
@@ -76,6 +76,27 @@
                 </div>
               </div>
             </div>
+
+              <div class="form-group row">
+                  <label for="email" class="col-sm-2 col-form-label">Email.</label>
+                  <div class="col-sm-5">
+                      <input type="text" class="form-control" name="email" id="email" placeholder="Enter your email" required>
+                      <div class="invalid-feedback">
+                          Please enter your email
+                      </div>
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label for="mob_no" class="col-sm-2 col-form-label">Mobile No.</label>
+                  <div class="col-sm-5">
+                      <input type="text" class="form-control" name="mob_no" id="mob_no" placeholder="Enter mobile number" required>
+                      <div class="invalid-feedback">
+                          Please enter your mobile number.
+                      </div>
+                  </div>
+              </div>
+
             <div class="form-group row">
               <label for="dob" class="col-sm-2 col-form-label">Date of birth</label>
               <div class="col-sm-5">

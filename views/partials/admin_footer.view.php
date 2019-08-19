@@ -45,18 +45,20 @@
     <script src="assets/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="assets/js/jquery.easing.min.js"></script>
 
     <!-- Page level plugin JavaScript-->
-    <script src="vendor/datatables/jquery.dataTables.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+    <script src="assets/js/jquery.dataTables.min.js"></script>
+    <script src="assets/js/dataTables.bootstrap4.min.js"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="assets/js/sb-admin.min.js"></script>
 
-    <!-- Demo scripts for this page-->
-    <script src="assets/js/demo/datatables-demo.js"></script>
+    <script>
+        $('#dataTable').dataTable()
+    </script>
 
+    <script src="assets/js/admin-func.js"></script>
   </body>
 
 </html>

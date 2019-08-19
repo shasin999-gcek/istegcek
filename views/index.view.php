@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="theme-color" content="#0e1b4d">
   
-  <title>Document</title>
+  <title>ISTE GCEK HOME</title>
   <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
   <link rel="stylesheet" href="/assets/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="/assets/css/main.css">
@@ -44,7 +44,7 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
+    <!-- <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item active">
           <a class="nav-link" href="/register.php">Register
@@ -57,7 +57,7 @@
           </a>
         </li>
       </ul>
-    </div>
+    </div> -->
   </nav>
   <section class="top">
     <div class="container">
@@ -65,19 +65,25 @@
      
       <div class="card text-center">
         <div class="card-header">
-         Student Membership Registration - 2018
+         Student Membership Registration -  <?= $regYear; ?>
         </div>
         <div class="card-body">
           <h5 class="card-title"><kbd><?= $count; ?></kbd> total registrations</h5>
-          <p class="card-text">Join ISTE by taking a student membership</p>
-           <a href="/register.php" class="btn bg-darkblue" style="color: #fff;">Register</a>
+            <?php if(!$isRegClosed): ?>
+               <p class="card-text">Join ISTE by taking a student membership</p>
+               <a href="/register.php" class="btn bg-darkblue" style="color: #fff;">Register</a>
+            <?php endif; ?>
         </div>
-        <div class="card-footer text-muted">
-          Registration closes soon..
+        <div class="card-footer text-danger">
+        <?php if(!$isRegClosed): ?>
+            Registration closses on <?= $regClosingDate; ?>
+        <?php else: ?>
+            Registration Closed
+        <?php endif; ?>
         </div>
       </div>
 
-      <div class="card text-center">
+      <!-- <div class="card text-center">
         <div class="card-header">
           Download Application Form
         </div>
@@ -88,6 +94,17 @@
         </div>
         <div class="card-footer text-muted">
           Any queries regarding registration <a href="tel:+919645100464">Call us</a>
+        </div>
+      </div> -->
+
+      <div class="card text-center">
+        <div class="card-header">
+          Check Application Status
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Already registered ? </h5>
+          <p class="card-text">Checkout your application status</p>
+          <a href="/addcontactdetails.php" class="btn bg-darkblue" style="color: #fff;">Application Status</a>
         </div>
       </div>
 
@@ -105,8 +122,7 @@
   <footer class="footer sticky">
     <div class="container">
       <span class="text-muted">
-      Developed by <a href="https://www.facebook.com/muhammed.shasin.9">Head WebOps</a>,
-      <a href="https://www.facebook.com/GCEK.ISTE/">ISTE GCEK</a> 
+      Developed by <a style="color: #0e1b4d;" href="https://www.facebook.com/muhammed.shasin.9">Muhammed Shasin</a>
     </span>
     </div>
   </footer>

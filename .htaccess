@@ -1,0 +1,7 @@
+Options -Indexes
+
+
+#RewriteEngine on
+#RewriteCond %{REQUEST_URI} !/maintenance.php
+#RewriteCond %{REMOTE_ADDR} !=111.111.111.111
+#RewriteRule ^.*$ /maintenance.php [R=302,L]
