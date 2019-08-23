@@ -1,8 +1,8 @@
--- Adminer 4.6.1 MySQL dump
+-- Adminer 4.6.3 MySQL dump
 
 SET NAMES utf8;
-SET time_zone = '+00:00';
-SET foreign_key_checks = 0;
+SET time_zone = '+05:30';
+SET foreign_key_checks = 1;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
 DROP TABLE IF EXISTS `branches`;
@@ -18,6 +18,35 @@ INSERT INTO `branches` (`id`, `branch_name`) VALUES
 (3,	'Civil Engineering'),
 (4,	'Electrical And Electronics Engineering'),
 (5,	'Electronics And Communication Engineering');
+
+
+DROP TABLE IF EXISTS `student_registrations`;
+CREATE TABLE `student_registrations` (
+  `id` int(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `mob_no` varchar(20) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `dob` date NOT NULL,
+  `branch_id` int(11) NOT NULL,
+  `adm_no` varchar(20) NOT NULL,
+  `semester` char(2) NOT NULL,
+  `house_name` varchar(50) NOT NULL,
+  `street_name` varchar(50) NOT NULL,
+  `post` varchar(50) NOT NULL,
+  `pincode` varchar(10) NOT NULL,
+  `district` varchar(50) NOT NULL,
+  `state` varchar(50) NOT NULL,
+  `reg_year` year(4) NOT NULL,
+  `application_status` smallint(6) NOT NULL DEFAULT '0',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `mob_no` (`mob_no`),
+  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `adm_no` (`adm_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
 
 DROP TABLE IF EXISTS `career_preferences`;
 CREATE TABLE `career_preferences` (
@@ -63,6 +92,29 @@ CREATE TABLE `other_special_interests` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
+DROP TABLE IF EXISTS `posts`;
+CREATE TABLE `posts` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `title_img_path` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `date` date NOT NULL,
+  `type` varchar(3) CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `post_images`;
+CREATE TABLE `post_images` (
+  `post_id` bigint(20) unsigned NOT NULL,
+  `image_path` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  KEY `post_id` (`post_id`),
+  CONSTRAINT `post_images_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `services`;
 CREATE TABLE `services` (
   `id` int(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -101,30 +153,8 @@ CREATE TABLE `student_career_preferences` (
   `career_preference_id` int(20) unsigned NOT NULL,
   KEY `career_preference_id` (`career_preference_id`),
   KEY `reg_id` (`reg_id`),
-  CONSTRAINT `student_career_preferences_ibfk_1` FOREIGN KEY (`reg_id`) REFERENCES `student_registrations` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
-DROP TABLE IF EXISTS `student_registrations`;
-CREATE TABLE `student_registrations` (
-  `id` int(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,
-  `dob` date NOT NULL,
-  `branch_id` int(11) NOT NULL,
-  `adm_no` varchar(20) NOT NULL,
-  `semester` char(2) NOT NULL,
-  `house_name` varchar(50) NOT NULL,
-  `street_name` varchar(50) NOT NULL,
-  `post` varchar(50) NOT NULL,
-  `pincode` varchar(10) NOT NULL,
-  `district` varchar(50) NOT NULL,
-  `state` varchar(50) NOT NULL,
-  `reg_year` year(4) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `updated_by` int(20) DEFAULT NULL,
-  `deleted_by` int(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  CONSTRAINT `student_career_preferences_ibfk_1` FOREIGN KEY (`reg_id`) REFERENCES `student_registrations` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `student_career_preferences_ibfk_2` FOREIGN KEY (`career_preference_id`) REFERENCES `career_preferences` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -133,7 +163,9 @@ CREATE TABLE `student_services` (
   `reg_id` int(20) unsigned NOT NULL,
   `service_id` int(20) unsigned NOT NULL,
   KEY `reg_id` (`reg_id`),
-  CONSTRAINT `student_services_ibfk_1` FOREIGN KEY (`reg_id`) REFERENCES `student_registrations` (`id`) ON DELETE CASCADE
+  KEY `service_id` (`service_id`),
+  CONSTRAINT `student_services_ibfk_1` FOREIGN KEY (`reg_id`) REFERENCES `student_registrations` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `student_services_ibfk_2` FOREIGN KEY (`service_id`) REFERENCES `services` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -143,7 +175,8 @@ CREATE TABLE `student_special_interests` (
   `special_interest_id` int(20) unsigned NOT NULL,
   KEY `special_interest_id` (`special_interest_id`),
   KEY `reg_id` (`reg_id`),
-  CONSTRAINT `student_special_interests_ibfk_1` FOREIGN KEY (`reg_id`) REFERENCES `student_registrations` (`id`) ON DELETE CASCADE
+  CONSTRAINT `student_special_interests_ibfk_1` FOREIGN KEY (`reg_id`) REFERENCES `student_registrations` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `student_special_interests_ibfk_2` FOREIGN KEY (`special_interest_id`) REFERENCES `special_interests` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -161,4 +194,17 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- 2018-08-28 15:59:21
+DROP TABLE IF EXISTS `website_settings`;
+CREATE TABLE `website_settings` (
+  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `value` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `website_settings` (`name`, `value`) VALUES
+('INSTALL_STATUS',	'0'),
+('REG_CLOSE_DATE',	'29/03/2009'),
+('REG_CLOSED',	'0'),
+('REG_YEAR',	'2019');
+
+-- 2019-08-19 17:12:33

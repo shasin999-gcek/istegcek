@@ -34,7 +34,8 @@
           <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
+            <a class="btn btn-primary" onclick="logout()">Logout</a>
+              <form action="/logout.php" method="post" id="logout_form" style="display: none;"></form>
           </div>
         </div>
       </div>
@@ -55,7 +56,11 @@
     <script src="assets/js/sb-admin.min.js"></script>
 
     <script>
-        $('#dataTable').dataTable()
+        $('#dataTable').dataTable();
+
+        function logout() {
+            $('#logout_form').submit();
+        }
     </script>
 
     <script src="assets/js/admin-func.js"></script>

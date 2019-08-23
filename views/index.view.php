@@ -104,7 +104,7 @@
         <div class="card-body">
           <h5 class="card-title">Already registered ? </h5>
           <p class="card-text">Checkout your application status</p>
-          <a href="/addcontactdetails.php" class="btn bg-darkblue" style="color: #fff;">Application Status</a>
+          <a href="/download_pdf.php" class="btn bg-darkblue" style="color: #fff;">Application Status</a>
         </div>
       </div>
 
@@ -120,11 +120,11 @@
   </footer> -->
 
   <footer class="footer sticky">
-    <div class="container">
+      <div class="container">
       <span class="text-muted">
-      Developed by <a style="color: #0e1b4d;" href="https://www.facebook.com/muhammed.shasin.9">Muhammed Shasin</a>
+      Developed by <a href="https://muhammedshasin.me">Muhammed Shasin</a>
     </span>
-    </div>
+      </div>
   </footer>
 
   <script src="/assets/js/jquery-3.3.1.min.js"></script>

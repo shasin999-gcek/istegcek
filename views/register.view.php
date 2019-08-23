@@ -264,13 +264,12 @@
     </div>
   </section>
 
-  <footer style="margin-top: 20px; background-color: #eee; height: 50px;">
-    <p style="text-align: center; padding: 10px;">
-      <span class="text-muted">Developed by 
-        <a href="https://www.facebook.com/muhammed.shasin.9">Head WebOps</a>,
-        <a href="https://www.facebook.com/GCEK.ISTE/">ISTE GCEK</a>
-      </span>
-    </p>
+  <footer class="footer sticky">
+      <div class="container">
+      <span class="text-muted">
+      Developed by <a href="https://muhammedshasin.me">Muhammed Shasin</a>
+    </span>
+      </div>
   </footer>
 
   <!-- <footer class="footer">

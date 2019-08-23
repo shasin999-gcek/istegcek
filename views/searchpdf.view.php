@@ -96,12 +96,11 @@
   </footer> -->
 
   <footer class="footer sticky">
-    <div class="container">
-      <span class="text-muted">
-      Developed by <a href="https://www.facebook.com/muhammed.shasin.9">Head WebOps</a>,
-      <a href="https://www.facebook.com/GCEK.ISTE/">ISTE GCEK</a> 
-    </span>
-    </div>
+      <div class="container">
+          <span class="text-muted">
+            Developed by <a href="https://muhammedshasin.me">Muhammed Shasin</a>
+          </span>
+      </div>
   </footer>
 
   <script src="/assets/js/jquery-3.3.1.min.js"></script>

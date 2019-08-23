@@ -19,13 +19,13 @@ class Auth
     public function create_user($user)
     {
         try {
-            $sql_query = 'insert into users (login_user_id, password) values (:username, :password)';
+            $sql_query = 'insert into users (login_user_id, user_type, password) values (:username, :user_type, :password)';
             $stmt = $this->pdo->prepare($sql_query);
-            $stmt->execute(
-                array(
-                    ':username' => $user['username'],
-                    ':password' => password_hash($user['password']), PASSWORD_DEFAULT)
-            );
+            $stmt->execute([
+                ':username' => $user['username'],
+                ':user_type' => 'ADMIN',
+                ':password' => password_hash($user['password'], PASSWORD_DEFAULT)
+            ]);
         } catch (PDOException $e) {
             die("Some thing wrong");
         }
@@ -45,6 +45,31 @@ class Auth
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             die("Cant fetch user");
+        }
+    }
+
+    public function authenticate($username, $password)
+    {
+        try {
+            $sql_query = 'select * from users where login_user_id = ?';
+            $stmt = $this->pdo->prepare($sql_query);
+            $stmt->execute(array($username));
+            if($stmt->rowCount() > 0) {
+               $user = $stmt->fetch(PDO::FETCH_ASSOC);
+               $hashed_password = $user['password'];
+               if(password_verify($password, $hashed_password)) {
+                   return true;
+               }
+               else {
+                   return false;
+               }
+            }
+            else {
+                return false;
+            }
+        }
+        catch (PDOException $e) {
+
         }
     }
 

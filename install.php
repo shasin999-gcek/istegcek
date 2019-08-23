@@ -39,10 +39,14 @@
 
 
     $auth->create_user(array(
-        'login_user_id' => $loginUserId,
+        'username' => $loginUserId,
         'password' => $password
     ));
-     
+
+    // change application status
+    $setting->appInstalled();
+
+
     header('Location: /login.php');
   }
 	
