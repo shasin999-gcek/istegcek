@@ -9,24 +9,24 @@
 			$this->pdo = $pdo;
 		}
 
-        public function getRegistrationCount()
-        {
-          $statement = $this->pdo->prepare("select count(*) from student_registrations");
+    public function getRegistrationCount()
+    {
+      $statement = $this->pdo->prepare("select count(*) from student_registrations");
 
-          $statement->execute();
+      $statement->execute();
 
-          return $statement->fetch(PDO::FETCH_COLUMN, 0);
-        }
+      return $statement->fetch(PDO::FETCH_COLUMN, 0);
+    }
 
 
-        public function getWebsiteSettings($setting_name)
-        {
-            $statement = $this->pdo->prepare("select value from website_settings where name = ?");
+    public function getWebsiteSettings($setting_name)
+    {
+        $statement = $this->pdo->prepare("select value from website_settings where name = ?");
 
-            $statement->execute(array($setting_name));
+        $statement->execute(array($setting_name));
 
-            return $statement->fetch(PDO::FETCH_COLUMN, 0);
-        }
+        return $statement->fetch(PDO::FETCH_COLUMN, 0);
+    }
 
 
 		public function selectAllFromTable($table) 
@@ -39,25 +39,25 @@
 		}
 
 
-        public function isAdmnoAlreadyTaken($adm_no)
-        {
-          $statement = $this->pdo->prepare(
-            "select id from student_registrations where adm_no= ?"
-          );
+    public function isAdmnoAlreadyTaken($adm_no)
+    {
+      $statement = $this->pdo->prepare(
+        "select id from student_registrations where adm_no= ?"
+      );
 
-          $statement->execute(array($adm_no));
+      $statement->execute(array($adm_no));
 
 
-          if($statement->rowCount() > 0)
-          {
-            return  true;
-          }
-          else
-          {
-            return false;
-          }
+      if($statement->rowCount() > 0)
+      {
+        return  true;
+      }
+      else
+      {
+        return false;
+      }
 
-        }
+    }
 
 
     public function saveRegistration($data, $regyear)
@@ -181,7 +181,7 @@ MYSQL_QUERY;
     public function getAllStudentDetails()
     {
           $selectStudentInfoSQL = <<<'MYSQL_QUERY'
-      select stu.id, name, mob_no, email, dob, adm_no, branch_name, semester, district
+      select stu.id, name, mob_no, email, dob, adm_no, branch_name, semester, district, application_status
       from student_registrations as stu, branches as b where stu.branch_id = b.id
 MYSQL_QUERY;
 
@@ -277,6 +277,21 @@ MYSQL_QUERY;
 
       return $stmt->fetch(PDO::FETCH_OBJ);
 
+    }
+
+
+    public function acceptRegistration($regId)
+    {
+      $stmt = $this->pdo->prepare('update student_registrations set application_status = 1 where id=?');
+      $stmt->execute(array($regId));
+      return $stmt->rowCount();
+    }
+
+    public function deleteRegistration($regId)
+    {
+      $stmt = $this->pdo->prepare('delete from student_registrations where id=?');
+      $stmt->execute(array($regId));
+      return $stmt->rowCount();
     }
 
 }

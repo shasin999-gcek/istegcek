@@ -28,16 +28,25 @@
         </tfoot>
         <tbody>
           <?php foreach($students as $student) : ?>
-          	<tr>
+          	<tr id='row-<?= $student->id?>'>
           		<td><?= $student->adm_no; ?></td>
           		<td><?= $student->name; ?></td>
                 <td><?= $student->mob_no; ?></td>
           		<td><?= $student->branch_name; ?></td>
           		<td><?= $student->semester; ?></td>
           		<td>
-                    <button class="btn btn-success btn-sm" onclick="acceptApplication('<?= $student->id ?>')">Accept</button>
-                    <button class="btn btn-danger btn-sm" onclick="deleteApplication('<?= $student->id ?>')"><i class="fa fa-trash"></i></button>
-                </td>
+                <?php if($student->application_status == 1): ?>
+                  <h4 class="text-success"><i class="fa fa-check"></i></h4>
+                <?php else: ?>  
+                  <h4 id='accept-<?= $student->id; ?>' style='display: none;' class="text-success"><i class="fa fa-check"></i></h4>
+                  <span id='button-group-<?= $student->id; ?>'>
+                    <button class="btn btn-success btn-sm" 
+                      onclick="acceptApplication('<?= $student->id ?>', '<?= $student->name; ?>')">Accept</button>
+                    <button class="btn btn-danger btn-sm" 
+                      onclick="deleteApplication('<?= $student->id ?>', '<?= $student->name; ?>')"><i class="fa fa-trash"></i></button>
+                  </span>
+                <?php endif; ?>   
+              </td>
           	</tr>
           <?php endforeach; ?>
         </tbody>
