@@ -16,7 +16,6 @@
         }
 
         if($auth->authenticate($username, $password)) {
-            session_name('ISTEGCEK_SESSION');
             session_start();
             $_SESSION['username'] = $username;
             header('Location: /admin.php');

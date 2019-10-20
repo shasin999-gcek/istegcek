@@ -4,16 +4,16 @@
 
 	if(!isset($_SESSION['username']))
 	{
-		http_response_code(401);
-		header('Location: /login.php');
-		exit;
+			http_response_code(401);
+			header('Location: /login.php');
+			exit;
 	}
 
   require 'core/bootstrap.php';
 
 	if($_SERVER["REQUEST_METHOD"] == "GET")
 	{
-
+	
 		$students = $builder->getAllStudentDetails();
 
 		require 'views/admin/dashboard.view.php';
@@ -21,6 +21,7 @@
 
 	if($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
+		
 		if($_REQUEST['action'] == 'accept') 
 		{
 			$count = $builder->acceptRegistration($_POST['registrationId']);
